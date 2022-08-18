@@ -1,26 +1,66 @@
+import { Component } from 'react'
 import './employees-list-item.css';
 
-const Employeeslistitem = () => {
-    return(
-        <li className="list-group-item d-flex justify-content-between">
-            <span className="list-group-item-lavel">Alexey Harvatskiy</span>
-            <input type="text" className="list-group-item-input" defaultValue="1000$"/>
-            <div className="d-flex justify-content-center aligh-items-center">
+class Employeeslistitem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            increase: false,
+            like: false
 
-                <button type="buttom"
-                        className="button btn-cookie btn-sm">
-                        <i className="fas fa-cookie"></i>
-                </button>
+        }
+    }
 
-                <button type="buttom"
-                        className="button btn-trash btn-sm">
-                        <i className="fas fa-trash"></i>
-                </button>
+    onIncrease = () => {
+        this.setState(({increase}) => ({
+            increase: !increase
+        }))
+    }
 
-                <i className="fas fa-star"></i>
-            </div>   
-        </li>
-    )
+    likeName = () => {
+        this.setState(({like}) => ({
+            like: !like
+        }))
+    }
+
+    render() {
+
+        const {name, salary, onDelite} = this.props;
+        const {increase, like} = this.state;
+
+
+        let classNames = "list-group-item d-flex justify-content-between";
+        if(increase) {
+            classNames += " increase";
+        }
+
+        if (like) {
+            classNames += " like"
+        }
+    
+        return(
+            <li className={classNames}>
+                <span onClick={this.likeName} className="list-group-item-lavel">{name}</span>
+                <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
+                <div className="d-flex justify-content-center aligh-items-center">
+    
+                    <button type="buttom"
+                            className="btn-cookie btn-sm"
+                            onClick={this.onIncrease}>
+                            <i className="fas fa-cookie"></i>
+                    </button>
+    
+                    <button type="buttom"
+                            className="button btn-trash btn-sm"
+                            onClick={onDelite}>
+                            <i className="fas fa-trash"></i>
+                    </button>
+    
+                    <i className="fas fa-star"></i>
+                </div>   
+            </li>
+        )
+    }
 }
 
 export default Employeeslistitem;
