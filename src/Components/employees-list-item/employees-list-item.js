@@ -1,66 +1,41 @@
-import { Component } from 'react'
 import './employees-list-item.css';
 
-class Employeeslistitem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            increase: false,
-            like: false
+const  Employeeslistitem = (props) => {
 
-        }
+    const {name, salary, onDelite, onToggleProps, increase, like} = props;
+
+    let classNames = "list-group-item d-flex justify-content-between";
+    if(increase) {
+        classNames += " increase";
     }
 
-    onIncrease = () => {
-        this.setState(({increase}) => ({
-            increase: !increase
-        }))
+    if (like) {
+        classNames += " like"
     }
 
-    likeName = () => {
-        this.setState(({like}) => ({
-            like: !like
-        }))
-    }
+    return(
+        <li className={classNames}>
+            <span className="list-group-item-lavel" onClick={onToggleProps} data-toggle="like">{name}</span>
+            <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
+            <div className="d-flex justify-content-center aligh-items-center">
 
-    render() {
+                <button type="buttom"
+                        className="btn-cookie btn-sm"
+                        onClick={onToggleProps}
+                        data-toggle="increase">
+                        <i className="fas fa-cookie"></i>
+                </button>
 
-        const {name, salary, onDelite} = this.props;
-        const {increase, like} = this.state;
+                <button type="buttom"
+                        className="button btn-trash btn-sm"
+                        onClick={onDelite}>
+                        <i className="fas fa-trash"></i>
+                </button>
 
-
-        let classNames = "list-group-item d-flex justify-content-between";
-        if(increase) {
-            classNames += " increase";
-        }
-
-        if (like) {
-            classNames += " like"
-        }
-    
-        return(
-            <li className={classNames}>
-                <span onClick={this.likeName} className="list-group-item-lavel">{name}</span>
-                <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
-                <div className="d-flex justify-content-center aligh-items-center">
-    
-                    <button type="buttom"
-                            className="btn-cookie btn-sm"
-                            onClick={this.onIncrease}>
-                            <i className="fas fa-cookie"></i>
-                    </button>
-    
-                    <button type="buttom"
-                            className="button btn-trash btn-sm"
-                            onClick={onDelite}>
-                            <i className="fas fa-trash"></i>
-                    </button>
-    
-                    <i className="fas fa-star"></i>
-                </div>   
-            </li>
-        )
-    }
+                <i className="fas fa-star"></i>
+            </div>   
+        </li>
+    )
 }
 
 export default Employeeslistitem;
